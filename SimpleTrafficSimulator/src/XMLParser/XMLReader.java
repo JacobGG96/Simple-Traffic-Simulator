@@ -38,7 +38,7 @@ public class XMLReader {
             //Se obtiene la lista de hijos de la raiz 'carreteras'
             tamañolista = rootNode.getChildren( "carretera" ).size();
             System.out.println("La cantidad de carreteras es: " + tamañolista + "\n");
-            
+            //hola
             //Se recorre la lista de hijos de 'carreteras'
             for ( int i = 0; i < tamañolista; i++ ){
                 //Se obtiene el elemento 'carretera'
