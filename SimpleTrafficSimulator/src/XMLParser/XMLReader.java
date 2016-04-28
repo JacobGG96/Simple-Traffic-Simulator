@@ -23,8 +23,6 @@ public class XMLReader {
 	
     //Se crea un SAXBuilder para poder parsear el archivo
     SAXBuilder builder = new SAXBuilder();
-    Element a;
-    Element b;
     File xmlFile = new File( "src/XMLParser/Carreteras.xml" );  
 
     
@@ -39,13 +37,13 @@ public class XMLReader {
 
             //Se obtiene la lista de hijos de la raiz 'carreteras'
             tamañolista = rootNode.getChildren( "carretera" ).size();
-            tamañotramo = ((Element) rootNode.getChildren( "carretera" )).getChildren().size();
             System.out.println("La cantidad de carreteras es: " + tamañolista + "\n");
             
             //Se recorre la lista de hijos de 'carreteras'
             for ( int i = 0; i < tamañolista; i++ ){
                 //Se obtiene el elemento 'carretera'
-            	a = (Element) rootNode.getChildren().get(i);
+            	
+            	Element a = rootNode.getChildren().get(i);
                 //Se obtiene el atributo 'nombre' que esta en el tag 'carretera'
                 String _idhw = a.getAttributeValue("id");
                 String _distancia = a.getAttributeValue("distancia");
@@ -67,37 +65,46 @@ public class XMLReader {
     
     }
 
-	private void getsectiondata(Element a) {
-		
-		for ( int i = 0; i < tamañotramo; i++ ){
+	private void getsectiondata(Element a) {		
             //Se obtiene el elemento 'carretera'
-        	b = a.getChildren().get(i); 
-        	// TODO Auto-generated method stub
-        	String _idsec = ((Element) b.getChildren()).getAttributeValue("id");
-        	String _direccion=  ((Element) b.getChildren()).getAttributeValue("direccion");
-        	String _radio =  ((Element) b.getChildren()).getAttributeValue("radio");
-        	String _posXi = ((Element) b.getChildren()).getAttributeValue("PosXi");
-        	String _posYi = ((Element) b.getChildren()).getAttributeValue("PosYi");
-        	String _posXf = ((Element) b.getChildren()).getAttributeValue("PosXf");
-        	String _posYf = ((Element) b.getChildren()).getAttributeValue("PosYf");
-        	String _distancia = ((Element) b.getChildren()).getAttributeValue("Distancia");
-        	getsubsectiondata(a);
-        	section1.insertarAlFrente(_idsec,_direccion, _radio, Subsection1, _posXi, _posYi, _posXf, _posYf, _distancia);
-        
-		
+        	Element b = a.getChildren().get(0);
+        	getdatasectionlist(b);
+    }
+	private void getdatasectionlist(Element b){
+		for(int i = 0; i <= b.getChildren().size(); i++ ){
+		// TODO Auto-generated method stub
+			Element c =  b.getChildren().get(i);
+			String _idsec =  c.getAttributeValue("id");
+			String _direccion= c.getAttributeValue("direccion");
+			String _radio = c.getAttributeValue("radio");
+			String _posXi = c.getAttributeValue("PosXi");
+			String _posYi = c.getAttributeValue("PosYi");
+			String _posXf = c.getAttributeValue("PosXf");
+			String _posYf = c.getAttributeValue("PosYf");
+			String _distancia = c.getAttributeValue("Distancia");
+			getsubsectiondata(c);
+			section1.insertarAlFrente(_idsec,_direccion, _radio, Subsection1, _posXi, _posYi, _posXf, _posYf, _distancia);
 			}
-	}
-	private void getsubsectiondata(Element a) {
-		for ( int i = 0; i < tamañotramo; i++ ){
-            //Se obtiene el elemento 'carretera'
-        	b = a.getChildren().get(i);
-        	// TODO Auto-generated method stub
-        	String _idss = ((Element) ((Element) b.getChildren()).getChildren()).getAttributeValue("id");
-        	String _velocidad =  ((Element) ((Element) b.getChildren()).getChildren()).getAttributeValue("velocidad");
-        	String _inclinacion = ((Element) ((Element) b.getChildren()).getChildren()).getAttributeValue("inclinacion");
-        	String _cantcarri = ((Element) ((Element) b.getChildren()).getChildren()).getAttributeValue("CantCarri");
-        	String _distancia = ((Element) ((Element) b.getChildren()).getChildren()).getAttributeValue("Distancia");
-        	Subsection1.insertarAlFrente( _idss, _velocidad, _inclinacion, _cantcarri, _distancia);
 		}
+	private void getsubsectiondata(Element c){
+		for(int i = 0 ; i <= c.getChildren().size(); i++ ){
+			Element d = c.getChildren().get(i);
+			getdatasubsectionlist(c);
+		}
+	}
+
+
+	private void getdatasubsectionlist(Element c) {
+		for(int i = 0; i <= c.getChildren().size(); i++ ){
+			Element d =  c.getChildren().get(i);
+			// TODO Auto-generated method stub
+			String _idss = d.getAttributeValue("id");
+			String _velocidad =  d.getAttributeValue("velocidad");
+			String _inclinacion = d.getAttributeValue("inclinacion");
+			String _cantcarri = d.getAttributeValue("CantCarri");
+			String _distancia = d.getAttributeValue("Distancia");
+			Subsection1.insertarAlFrente( _idss, _velocidad, _inclinacion, _cantcarri, _distancia);
+
+			}
 	}
 }
